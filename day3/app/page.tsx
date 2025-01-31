@@ -14,7 +14,7 @@ export default function Home() {
           <div className="h-auto lg:h-[584px] w-full lg:w-[790px] bg-[#2A254B] p-[20px] lg:p-[60px]">
             <div className="relative gap-[20px] lg:gap-[41px] mb-8 lg:mb-0">
               <h1 className="text-white text-lg lg:text-2xl leading-8 lg:leading-10">
-                The furniture brand for the <br className="hidden lg:block" />{" "}
+                The furniture brand for the <br className="hidden lg:block" />
                 future, with timeless designs
               </h1>
               <Link href="./components/allProducts" className="h-[48px] lg:h-[56px] w-auto px-6 lg:px-8 bg-[#F9F9F926] text-white mt-8 lg:mt-12 whitespace-nowrap">

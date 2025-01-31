@@ -13,5 +13,8 @@ export type Product = {
     height: string;
     width: string;
     depth: string;
-     }
+  },
+  quantity: number,
+  inventory: number,
+  features?: string[];
 }

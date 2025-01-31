@@ -55,6 +55,12 @@ export const product = defineType({
             }]
         }),
         defineField({
+            name: "inventory",
+            type: "number",
+            title:"Inventory"
+
+        }),
+        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
@@ -77,6 +83,6 @@ export const product = defineType({
               { name: 'depth', title: 'Depth', type: 'string' },
             ],
             description: 'Dimensions of the product',
-          }),
+          })
     ]
 })

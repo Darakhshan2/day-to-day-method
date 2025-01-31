@@ -1,96 +1,171 @@
 
-import React from 'react'
-import Header from '../header/page'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
+import { Product } from '../type'
+import { GetCartItem, removeItem, updatecartQuantity } from '@/app/functionality/funct'
+import Swal from 'sweetalert2'
 
-export default function Shoping() {
+const Shopping = () => {
+  const [cartItem, setCartItem] = useState<Product[]>([])
+
+  useEffect(() => {
+    setCartItem(GetCartItem())
+  }, [])
+
+  const handleRemove = (id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this item",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#03085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeItem(id)
+        setCartItem(GetCartItem())
+        Swal.fire("Removed", "Item has been removed successfully", "success")
+      }
+    })
+  }
+
+  const handleQuantity = (id: string, quantity: number) => {
+    updatecartQuantity(id, quantity)
+    setCartItem(GetCartItem())
+  }
+
+  const increment = (id: string) => {
+    const product = cartItem.find((item) => item._id === id)
+    if (product) {
+      handleQuantity(id, product.inventory + 1)
+    }
+  }
+
+  const decrement = (id: string) => {
+    const product = cartItem.find((item) => item._id === id)
+    if (product && product.inventory > 1) {
+      handleQuantity(id, product.inventory - 1)
+    }
+  }
+
+  const totalCalculate = () => {
+    return cartItem.reduce((total, item) => total + item.price * item.inventory, 0)
+  }
+
+  const handleProceed = () => {
+    Swal.fire({
+      title: "Proceed to Checkout",
+      text: "Please review your cart before checkout",
+      icon: "question",
+      confirmButtonColor: "#03085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Proceed"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Success!", "Your order has been successfully processed", "success")
+        setCartItem([])
+      }
+    })
+  }
+
   return (
-    <>
- <Header/>
- <div className="bg-gray-200 w-full m-2 px-4 sm:px-10 lg:px-40 pt-10 pb-16 text-custom-purple">
-  {/* Header */}
-  <h1 className="text-2xl sm:text-3xl text-center lg:text-left">Your Shopping Cart</h1>
+    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-8">
+      <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        {/* Cart Items Section */}
+        <div className="col-span-2">
+          <h1 className="text-2xl font-bold mb-4">Your Shopping Cart</h1>
 
-  {/* Grid Container */}
-  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-10">
-    {/* Product Section */}
-    <div className="col-span-2 border-2 p-4">
-      <h1 className="text-lg font-semibold">Product</h1>
+          {/* Cart Items List */}
+          <div className="space-y-6">
+            {cartItem.length > 0 ? (
+              cartItem.map((item) => (
+                <div key={item._id} className="flex items-center justify-between p-4 border-b">
+                  <div className="flex items-center space-x-4">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.name}
+                      width={100}
+                      height={100}
+                      className="object-cover rounded-md"
+                    />
+                    <div className="text-sm">
+                      <p className="font-semibold">{item.name}</p>
+                      <p className="text-gray-500">${item.price}</p>
+                    </div>
+                  </div>
 
-      {/* Product List */}
-      <div className="divide-y mt-8">
-        {/* Product 1 */}
-        <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/Product Image.png"
-              width={20}
-              height={20}
-              alt="Product 1"
-              className="w-20 h-20 sm:w-28 sm:h-28 transition-transform duration-300 ease-in-out hover:scale-105"
-            />
-            <div>
-              <h1 className="text-base sm:text-lg font-medium">Graystone Vase</h1>
-              <p className="text-sm text-gray-600">A timeless ceramic vase with a tri-color grey glaze.</p>
-            </div>
-          </div>
-          <div className="flex flex-col items-center sm:flex-row sm:gap-4">
-            <p className="text-sm sm:text-base font-medium">Quantity: <span className="font-semibold">1</span></p>
-            <p className="text-sm sm:text-base font-medium">£85</p>
+                  {/* Quantity Controls */}
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => decrement(item._id)}
+                      className="px-3 py-1 bg-gray-300 rounded-full hover:bg-gray-400"
+                    >
+                      -
+                    </button>
+                    <span className="text-lg">{item.inventory}</span>
+                    <button
+                      onClick={() => increment(item._id)}
+                      className="px-3 py-1 bg-gray-300 rounded-full hover:bg-gray-400"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Remove Item */}
+                  <button
+                    onClick={() => handleRemove(item._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
           </div>
         </div>
 
-        {/* Product 2 */}
-        <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-4">
-            <Image
-              width={20}
-              height={20}
-              src="/Product Image 2.png"
-              alt="Product 2"
-              className="w-20 h-20 sm:w-28 sm:h-28 transition-transform duration-300 ease-in-out hover:scale-105"
-            />
-            <div>
-              <h1 className="text-base sm:text-lg font-medium">Basic White Vase</h1>
-              <p className="text-sm text-gray-600">Beautiful and simple, this is one for the classics.</p>
+        {/* Payment Calculation Sidebar */}
+        <div className="bg-gray-50 p-6 rounded-lg shadow-lg h-fit">
+          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <span className="text-lg">Subtotal:</span>
+              <span className="font-semibold">${totalCalculate().toFixed(2)}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-lg">Shipping:</span>
+              <span className="font-semibold">Free</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-lg">Tax:</span>
+              <span className="font-semibold">${(totalCalculate() * 0.1).toFixed(2)}</span>
+            </div>
+
+            <div className="flex justify-between border-t pt-4">
+              <span className="text-xl font-bold">Total:</span>
+              <span className="text-xl font-bold">${(totalCalculate() + totalCalculate() * 0.1).toFixed(2)}</span>
             </div>
           </div>
-          <div className="flex flex-col items-center sm:flex-row sm:gap-4">
-            <p className="text-sm sm:text-base font-medium">Quantity: <span className="font-semibold">1</span></p>
-            <p className="text-sm sm:text-base font-medium">£85</p>
-          </div>
+
+          <button
+            onClick={handleProceed}
+            className="mt-6 w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </div>
-
-    {/* Total Section */}
-    <div className="border-2 p-4">
-      <h1 className="text-lg font-semibold">Total</h1>
-      <div className="mt-10 space-y-6">
-        <div className="flex justify-between">
-          <p className="text-base font-medium">Graystone Vase</p>
-          <p className="text-base font-medium">£85</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-base font-medium">Basic White Vase</p>
-          <p className="text-base font-medium">£85</p>
-        </div>
-        <hr className="border-gray-300 my-4" />
-        <div className="flex justify-between font-semibold text-lg">
-          <p>Subtotal</p>
-          <p>£170</p>
-        </div>
-        <p className="text-sm text-gray-500">Taxes and shipping are calculated at checkout</p>
-      </div>
-      <button className="bg-custom-purple w-full mt-6 py-3 text-white rounded hover:bg-purple-700 transition">
-        Go to Checkout
-      </button>
-    </div>
-  </div>
-</div>
-
-
- </>
   )
 }
+
+export default Shopping
