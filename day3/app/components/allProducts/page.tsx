@@ -1,9 +1,9 @@
 "use client"
 import Header from "../header/page";
-import { client } from "@/sanity/lib/client";
-import { allProducts } from "@/sanity/lib/query"
+import { client } from "../../../sanity/lib/client";
+import { allProducts } from "../../../sanity/lib/query"
 import { Product } from "../type";
-import { AddtoCart } from "@/app/functionality/funct";
+import { AddtoCart } from "../../functionality/funct";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";

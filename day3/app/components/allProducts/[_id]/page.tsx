@@ -1,12 +1,13 @@
 "use client"
 import { useState, useEffect } from "react";
-import { SanityFetch } from "@/sanity/lib/fetch";
+import { SanityFetch } from "../../../../sanity/lib/fetch";
 import Link from "next/link";
 import { Product } from "../../type";
-import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import Image from "next/image";
-import { AddtoCart } from "@/app/functionality/funct";
+import { client } from '../../../../sanity/lib/client';
+
+import { AddtoCart } from "../../../functionality/funct";
 import Header from "../../header/page";
 import Swal from "sweetalert2";
 

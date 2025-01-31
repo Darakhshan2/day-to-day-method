@@ -1,8 +1,9 @@
-import { allProducts } from "@/sanity/lib/query"
+import { allProducts } from "../sanity/lib/query"
 import { Product } from "./components/type";
 import { AddtoCart } from "./functionality/funct";
 import Link from "next/link";
 import Image from "next/image";
+import { SanityFetch } from "../sanity/lib/fetch";
 export default async function FetchdataSanity() {
     const products: Product[] = await SanityFetch({ query: allProducts })
       const HandleCart = (e: React.MouseEvent, product: Product) => {
@@ -12,7 +13,6 @@ export default async function FetchdataSanity() {
       
     return (
         <>
-            
            <div className="lg:w-full w-auto mt-3 h-auto lg:h-[209px]">
         <Image src={"/Frame 143.png"} alt="" width={1440} height={209} />
        <h1 className="text-5xl text-slate-600 text-center m-8" style={{fontFamily:"Poppins"}}>Our Popular Products</h1>

@@ -1,10 +1,9 @@
-
 "use client"
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { Product } from '../type'
-import { GetCartItem, removeItem, updatecartQuantity } from '@/app/functionality/funct'
+import { GetCartItem, removeItem, updatecartQuantity } from '../../functionality/funct'
 import Swal from 'sweetalert2'
 
 const Shopping = () => {
