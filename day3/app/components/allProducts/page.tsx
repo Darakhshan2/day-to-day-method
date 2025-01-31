@@ -20,7 +20,7 @@ export default  function All() {
    },[])
 
  const HandleCart = (e: React.MouseEvent, product: Product) => {
-     e.preventDefault;
+     e.preventDefault();
      Swal.fire({
        position: "top-right",
        icon: "success",

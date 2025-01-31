@@ -7,7 +7,7 @@ import { SanityFetch } from "../sanity/lib/fetch";
 export default async function FetchdataSanity() {
     const products: Product[] = await SanityFetch({ query: allProducts })
       const HandleCart = (e: React.MouseEvent, product: Product) => {
-        e.preventDefault;
+        e.preventDefault();
         AddtoCart(product);
       };
       
