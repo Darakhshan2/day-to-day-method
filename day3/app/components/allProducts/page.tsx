@@ -16,10 +16,12 @@ export default  function All() {
       const Fetched : Product[] = await client.fetch(allProducts)
        setProducts(Fetched)
        
+
+       if(!Fetched){
+        throw new Error
+      }
     }
-    if(!Fetched){
-      throw new Error
-    }
+   
     FetchData()
    },[])
 
