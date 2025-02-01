@@ -29,11 +29,7 @@ function RootLayout({
   
       <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-
-        <header>
-          
-          </header>
-          <main>{children}</main>
+          {children}
         </body>
         <Footer/>
       </html>  
