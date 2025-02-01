@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -26,13 +26,14 @@ function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  
-      <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          {children}
-        </body>
-        <Footer/>
-      </html>  
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+        <Footer />
+      </body>
+    </html>
   );
 }
 
