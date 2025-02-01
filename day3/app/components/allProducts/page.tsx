@@ -14,8 +14,10 @@ export default  function All() {
   useEffect(() => {
      async function FetchData(){
       const Fetched : Product[] = await client.fetch(allProducts)
-         setProducts(Fetched)
+       setProducts(Fetched)
+       
     }
+    console.log(`error`)
     FetchData()
    },[])
 
