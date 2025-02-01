@@ -28,8 +28,9 @@ function RootLayout({
   return (
   
       <html lang="en">
-         <body>
-          <header>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+
+        <header>
           
           </header>
           <main>{children}</main>
