@@ -17,7 +17,9 @@ export default  function All() {
        setProducts(Fetched)
        
     }
-    console.log(`error`)
+    if(!Fetched){
+      throw new Error
+    }
     FetchData()
    },[])
 
